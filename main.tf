@@ -15,6 +15,22 @@ module "rds" {
   vpc_id = module.vpc.vpc_id
   vpc_cidr = "0.0.0.0/16" # harded coded bc rds has not cidr block as attribute from tf aws rds documtation
 }
+module "ec2" {
+  source = "./ec2"
+  subnet_id = module.vpc.public_subnet1_id
+  vpc_id = module.vpc.vpc_id
+  tags = local.project_tags
+  
+}
+# subnet id, tags,vpc.id are reference in var.tf in ec2 module
+#No need to mentioned variables with defualt value unless you to overide them e.g instance_type
+# NB in every module any orgument you mentioned in var.tf without a deault value must be mentioned in main.tf
+# those with default value can only be mentioned if you want to overide them
+#but if you wish to use the defalt value you can ignore it.
+#you chanage workspace using code, test, dev, stage,prod. 
+
+
+
 
 
 
